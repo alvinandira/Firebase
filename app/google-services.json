@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "170146347683",
+    "firebase_url": "https://cobacoba-a1bb1.firebaseio.com",
+    "project_id": "cobacoba-a1bb1",
+    "storage_bucket": "cobacoba-a1bb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170146347683:android:6cb0aeb5dfeb0e3b",
+        "android_client_info": {
+          "package_name": "com.example.alvin.listview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170146347683-e3718vs7vk8ppg2vf7nltdtrthh20sa0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alvin.listview",
+            "certificate_hash": "12150ddc5a90b8af49b3dae11fba1513a9db9b9b"
+          }
+        },
+        {
+          "client_id": "170146347683-qkrgtr702qbg5h2qrlsm9n0lpu3ov7mg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkFvzdceM0HEOf9oCYngngdjEpvPZYogs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170146347683-qkrgtr702qbg5h2qrlsm9n0lpu3ov7mg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
