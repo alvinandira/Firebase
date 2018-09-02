@@ -1,5 +1,6 @@
 package com.example.alvin.listview;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.alvin.listview.R;
+import com.example.alvin.listview.list;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -17,12 +20,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
-import org.w3c.dom.Text;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
+
     private EditText email, password;
-    private Button login, register;
+    private Button login;
+
     FirebaseAuth auth;
 
     @Override
@@ -38,72 +45,77 @@ public class MainActivity extends AppCompatActivity {
                         new OnCompleteListener<InstanceIdResult>() {
                             @Override
                             public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                if (task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     Log.d("TOKEN", task.getResult().getToken());
                                 }
                             }
-                        }
-                );
-        auth = FirebaseAuth.getInstance();
-        email = findViewById(R.id.mainEmail);
-        password = findViewById(R.id.mainPassword);
-        login = findViewById(R.id.loginButton);
-        register = findViewById(R.id.registerButton);
+                        });
 
-        register.setOnClickListener(new View.OnClickListener() {
+        auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null){
+            Intent intent = new Intent(MainActivity.this, list.class);
+            startActivity(intent);
+            finish();
+        }
+
+        email = findViewById(R.id.mainEmailAddress);
+        password = findViewById(R.id.mainPassword);
+
+        login = findViewById(R.id.mainButtonLogin);
+
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // TODO : get all values
                 String emailText = email.getText().toString();
                 String passwordText = password.getText().toString();
+
+                Pattern VALID_EMAIL_ADDRESS_REGEX =
+                        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+                                Pattern.CASE_INSENSITIVE);
+
+                Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailText);
+
+                // TODO : cek input
                 if (TextUtils.isEmpty(emailText)) {
-                    email.setError("Email Harus Diisi");
+                    // TODO : cek email
+                    email.setError("Email tidak boleh kosong");
+                    email.requestFocus();
+                } else if (!matcher.find()) {
+                    // TODO : cek email Regexp
+                    email.setError("Format email salah");
                     email.requestFocus();
                 } else if (TextUtils.isEmpty(passwordText)) {
-                    password.setError("password tidak boleh kosong");
+                    // TODO : cek password
+                    password.setError("Password tidak boleh kosong");
                     password.requestFocus();
                 } else {
-                    auth.createUserWithEmailAndPassword(emailText, passwordText)
+                    // TODO : Login
+
+                    auth.signInWithEmailAndPassword(emailText, passwordText)
                             .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         FirebaseUser user = auth.getCurrentUser();
-                                        Toast.makeText(MainActivity.this, "Daftar Berhasil", Toast.LENGTH_SHORT).show();
+
+                                        if (user != null) {
+                                            Intent intent = new Intent(MainActivity.this, list.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+                                            Toast.makeText(MainActivity.this, "Login gagal", Toast.LENGTH_SHORT).show();
+                                        }
                                     } else {
-                                        Toast.makeText(MainActivity.this, "Daftar Gagal", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this, "Login gagal", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
             }
         });
-        login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick (View view){
-                String emailText = email.getText().toString();
-                String passwordText = password.getText().toString();
-                if (TextUtils.isEmpty(emailText)) {
-                    email.setError("Email Harus Diisi");
-                    email.requestFocus();
-                } else if (TextUtils.isEmpty(passwordText)) {
-                    password.setError("Password tidak boleh kosong");
-                    password.requestFocus();
-                } else {
-                    auth.signInWithEmailAndPassword(emailText, passwordText)
-                            .addOnCompleteListener(MainActivity.this, (task) -> {
-                                if (task.isSuccessful()) {
-                                    FirebaseUser user = auth.getCurrentUser();
-                                    if (user != null) {
-                                        Toast.makeText(MainActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(MainActivity.this, "Login Gagal", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else
-                                    Toast.makeText(MainActivity.this, "Login Gagal", Toast.LENGTH_SHORT).show();
-                            });
-                }
-            }
-            });
 
-        }
     }
+}

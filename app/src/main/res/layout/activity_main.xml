@@ -1,42 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
+    tools:context=".MainActivity"
+    android:padding="16dp"
     android:orientation="vertical"
-    tools:context="com.example.alvin.listview.MainActivity">
+    android:gravity="center_vertical"
+    >
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="email"
-        android:id="@+id/mainEmail"
-        android:layout_marginBottom="8dp"/>
+        android:hint="Email address"
+        android:id="@+id/mainEmailAddress"
+        android:layout_marginBottom="8dp"
+
+        android:inputType="textEmailAddress"
+        />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"
-        android:inputType="textPassword"
+        android:hint="Password"
         android:id="@+id/mainPassword"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+
+        android:inputType="textPassword"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2">
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginButton"
-        android:text="Login"
-        android:layout_weight="1"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="register"
-        android:layout_weight="1"
-        android:id="@+id/registerButton"/>
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Log In"
+            android:id="@+id/mainButtonLogin"
+            android:layout_weight="1"
+            />
+
     </LinearLayout>
 
 </LinearLayout>
