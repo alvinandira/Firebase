@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">listview</string>
+    <string name="app_name">Firebase</string>
     <string name="title_activity_bottom_navigation">bottom_navigation</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
